@@ -70,7 +70,7 @@ function addNewCard(evt) {
         openImage
     );
     placesList.prepend(cardElement);
-    closeModal('.popup');
+    closeModal(evt.target.closest('.popup'));
     evt.target.reset();
 };
 formPlace.addEventListener('submit', addNewCard);

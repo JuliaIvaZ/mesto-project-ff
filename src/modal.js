@@ -10,7 +10,6 @@ function openModal(modalSelector) {
 
 // Функция закрытия модального окна
 function closeModal(modalElement) {
-    
     modalElement.classList.remove('popup_is-opened');
 };
 
