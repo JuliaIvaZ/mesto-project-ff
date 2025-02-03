@@ -42,11 +42,11 @@ initialCards.forEach((item) => {
 
 //Новый функционал:
 // Находим форму в DOM
-const formElement = document.querySelector('.popup__button');
+const formElement = document.forms['edit-profile'];
 
 // Находим поля формы в DOM
-const nameInput = document.querySelector('.popup__input_type_name');
-const jobInput = document.querySelector('.popup__input_type_description');
+const nameInput = formElement.querySelector('.popup__input_type_name');
+const jobInput = formElement.querySelector('.popup__input_type_description');
 
 // Обработчик «отправки» формы
 function handleFormSubmit(evt) {
@@ -55,8 +55,7 @@ function handleFormSubmit(evt) {
     document.querySelector('.profile__title').textContent = nameInput.value;
     document.querySelector('.profile__description').textContent = jobInput.value;
 
-    console.log(nameInput.value, jobInput.value);
-    console.log(document.querySelector('.profile__title').textContent, document.querySelector('.profile__description').textContent);
+    closeModal('.popup');
 };
 
 // Прикрепляем обработчик к форме
