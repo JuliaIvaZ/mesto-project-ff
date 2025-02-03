@@ -3,15 +3,23 @@ function openModal(modalSelector) {
     const modal = document.querySelector(modalSelector);
     if (modal) 
     {
-        modal.classList.add('popup_is-opened');
-        
+        modal.classList.add('popup_is-animated');
+        modal.classList.add('popup_is-opened');  
     };
 };
 
+// Функция открытия модального окна с изображением
+function openImage(cardImage, cardTitle) {
+    const image = document.querySelector('.popup__content_content_image');
+    image.querySelector('.popup__image').src = cardImage.src;
+    image.querySelector('.popup__image').alt = cardImage.alt;
+    image.querySelector('.popup__caption').textContent = cardTitle.textContent;
+    openModal('.popup_type_image');
+}
+
+// Функция закрытия модального окна
 function closeModal(modalSelector) {
-    document.querySelectorAll(modalSelector).forEach((modal) => {
-        modal.classList.remove('popup_is-opened');
-    });
+    modalSelector.classList.remove('popup_is-opened');
 };
 
-export {openModal, closeModal};
+export {openModal, openImage, closeModal};

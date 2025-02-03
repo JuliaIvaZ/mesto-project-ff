@@ -1,11 +1,14 @@
 import './pages/index.css';
 import { initialCards, createCard, deleteCard } from './cards.js';
-import { openModal, closeModal } from './modal.js';
+import { openModal, openImage, closeModal } from './modal.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
 
 const openPopupProfile = document.querySelector('.profile__edit-button'); // Кнопка открытия попапа редактирование профила
 const openPopupCard = document.querySelector('.profile__add-button'); // Кнопка открытия попапа добавления новой карточки
+const openPopupImage = document.querySelector('.card'); // Кнопка открытия попапа с картинкой
+//const popupText = openPopupImage.querySelector('.card__description').querySelector('.card__title');
+//const popupImage = openPopupImage.querySelector('.card__image');
 const popup = document.querySelector('.popup');
 
 // Открытие попапов редактирования профиля и создания карточки по клику
@@ -15,12 +18,16 @@ openPopupProfile.addEventListener('click', () => {
     document.querySelector('.popup__input_type_description').value = document.querySelector('.profile__description').textContent;
 });
 openPopupCard.addEventListener('click', () => {openModal('.popup_type_new-card')});
+//openPopupImage.addEventListener('click', () => {openImage(popupImage, popupText)});
 
-// Закрытие попапов
+// Закрываем модальное окно при клике на оверлей (фон) и крестик
 document.body.addEventListener('click', (evt) => {
     if (evt.target.matches('.popup__close')) {
-        closeModal('.popup');  
-    };
+        closeModal(evt.target.closest('.popup'));
+    }
+    if (evt.target.matches('.popup')) {
+        closeModal(evt.target);
+    }
 });
 
 // Добавление обработчика событий на клавишу Esc
