@@ -8,7 +8,13 @@ function openModal(modalSelector) {
     };
 };
 
-// Функция открытия модального окна с изображением
+// Функция закрытия модального окна
+function closeModal(modalElement) {
+    
+    modalElement.classList.remove('popup_is-opened');
+};
+
+// Функция для заполнения модального окна данными картинки
 function openImage(cardImage, cardTitle) {
     const image = document.querySelector('.popup__content_content_image');
     image.querySelector('.popup__image').src = cardImage.src;
@@ -17,9 +23,4 @@ function openImage(cardImage, cardTitle) {
     openModal('.popup_type_image');
 }
 
-// Функция закрытия модального окна
-function closeModal(modalSelector) {
-    modalSelector.classList.remove('popup_is-opened');
-};
-
-export {openModal, openImage, closeModal};
+export { openModal, closeModal, openImage};

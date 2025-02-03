@@ -39,7 +39,7 @@ function deleteCard(card) {
 
 // @todo: Функция создания карточки 
 function createCard(item, deleteCard) {
-  
+
   const defaultCard = document.querySelector('#card-template').content.querySelector('.card');  // Темплейт карточки
   const card = defaultCard.cloneNode(true); 
 
@@ -60,4 +60,9 @@ function createCard(item, deleteCard) {
   return card; 
 };
 
-export { initialCards, createCard, deleteCard };
+// Добавление лайка
+function addLike(evt) {
+  evt.target.classList.toggle('card__like-button_is-active');
+}
+
+export { initialCards, createCard, deleteCard, addLike };
