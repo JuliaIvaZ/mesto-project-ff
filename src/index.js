@@ -39,8 +39,6 @@ initialCards.forEach((item) => {
     placesList.append(cardElement);
 });
 
-
-//Новый функционал:
 // Находим форму в DOM
 const formElement = document.forms['edit-profile'];
 
@@ -55,8 +53,32 @@ function handleFormSubmit(evt) {
     document.querySelector('.profile__title').textContent = nameInput.value;
     document.querySelector('.profile__description').textContent = jobInput.value;
 
+// Закрываем модальное окно
     closeModal('.popup');
 };
 
 // Прикрепляем обработчик к форме
 formElement.addEventListener('submit', handleFormSubmit);
+
+// Находим форму в DOM
+const formPlace = document.forms['new-place'];
+
+// Находим поля формы в DOM
+const placeInput = formPlace.querySelector('.popup__input_type_card-name');
+const linkInput = formPlace.querySelector('.popup__input_type_url');
+
+// Обработчик «отправки» формы
+function addNewCard(evt) {
+    evt.preventDefault();
+
+    const cardElement = createCard({name: placeInput.value, link: linkInput.value}, deleteCard);
+    placesList.prepend(cardElement);
+
+// Закрываем модальное окно
+    closeModal('.popup');
+
+    evt.target.reset();
+};
+
+// Прикрепляем обработчик к форме
+formPlace.addEventListener('submit', addNewCard);
