@@ -39,46 +39,40 @@ initialCards.forEach((item) => {
     placesList.append(cardElement);
 });
 
-// Находим форму в DOM
+// Редактирование данных профиля
 const formElement = document.forms['edit-profile'];
-
-// Находим поля формы в DOM
 const nameInput = formElement.querySelector('.popup__input_type_name');
 const jobInput = formElement.querySelector('.popup__input_type_description');
 
-// Обработчик «отправки» формы
 function handleFormSubmit(evt) {
     evt.preventDefault();
-
     document.querySelector('.profile__title').textContent = nameInput.value;
     document.querySelector('.profile__description').textContent = jobInput.value;
-
-// Закрываем модальное окно
     closeModal('.popup');
 };
-
-// Прикрепляем обработчик к форме
 formElement.addEventListener('submit', handleFormSubmit);
 
-// Находим форму в DOM
+// Добавление карточки на страницу
 const formPlace = document.forms['new-place'];
-
-// Находим поля формы в DOM
 const placeInput = formPlace.querySelector('.popup__input_type_card-name');
 const linkInput = formPlace.querySelector('.popup__input_type_url');
 
-// Обработчик «отправки» формы
 function addNewCard(evt) {
     evt.preventDefault();
-
-    const cardElement = createCard({name: placeInput.value, link: linkInput.value}, deleteCard);
+    const cardElement = createCard({name: placeInput.value, link: linkInput.value}, deleteCard, addLike);
     placesList.prepend(cardElement);
-
-// Закрываем модальное окно
     closeModal('.popup');
-
     evt.target.reset();
 };
-
-// Прикрепляем обработчик к форме
 formPlace.addEventListener('submit', addNewCard);
+
+// Добавление лайка
+function addLike(evt) {
+    evt.target.classList.toggle('card__like-button_is-active');
+}
+
+placesList.addEventListener('click', (evt) => {
+    if (evt.target.matches('.card__like-button')) {
+        addLike(evt);
+    };
+});
