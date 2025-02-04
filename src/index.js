@@ -1,7 +1,7 @@
 import './pages/index.css';
 import { initialCards } from './initialCards.js';
 import { createCard, deleteCard, addLike } from './cards.js';
-import { openModal, closeModal, openImage } from './modal.js';
+import { openModal, closeModal } from './modal.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
 const openPopupProfile = document.querySelector('.profile__edit-button'); // Кнопка открытия попапа редактирование профила
@@ -22,6 +22,10 @@ const linkInput = newPlaceForm.querySelector('.popup__input_type_url');
 
 const openPopupImage = document.querySelectorAll('.card__image');
 const popupImage = document.querySelector('.popup_type_image');
+const popupImageContent = document.querySelector('.popup__content_content_image');
+const imageContent = popupImageContent.querySelector('.popup__image');
+const imageCaption = popupImageContent.querySelector('.popup__caption');
+const closeButton = popupImageContent.querySelector('.popup__close');
 
 // Открытие попапов редактирования профиля и создания карточки по клику
 openPopupProfile.addEventListener('click', () => {
@@ -66,7 +70,7 @@ function addNewCard(evt) {
         link: linkInput.value
     }
     renderCard(newCard);
-    closeModal(popupNewCardCreation);      //(evt.target.closest('.popup'));
+    closeModal(popupNewCardCreation);  
     evt.target.reset();
 };
 
@@ -83,25 +87,44 @@ function handleProfileFormSubmit(evt) {
     profileTitle.textContent = popupInputName.value;
     profileDescription.textContent = popupInputDescription.value;
     evt.target.reset();
-    closeModal(evt.target.closest('.popup'));
+    closeModal(popupProfileEdit);
 };
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
-// Добавление лайка
-placesList.addEventListener('click', (evt) => {
-    if (evt.target.matches('.card__like-button')) {
-        addLike(evt);
-    };
-});
+
+// Функция для заполнения модального окна данными картинки
+function openImage(cardImage, cardTitle) {
+    imageContent.src = cardImage.src;
+    imageContent.alt = cardImage.alt;
+    imageCaption.textContent = cardTitle.textContent;
+   
+    openModal(popupImage);
+};
 
 // Открытие попапа с картинкой
 openPopupImage.forEach((item) => {
     item.addEventListener('click', () => {
-    const imageData = item;
+    const imageData = item.querySelector('.card__image');
     const imageTitle = item.closest('li').querySelector('.card__title').textContent;
+
+    console.log(imageData);
+    console.log(imageTitle);
 
     openModal(popupImage);
     openImage(imageData, imageTitle);
+
     })
 });
+
+closeButton.addEventListener('click', () => {
+    closeModal(popupImage);
+});
+
+
+// Добавление лайка
+//placesList.addEventListener('click', (evt) => {
+//    if (evt.target.matches('.card__like-button')) {
+//        addLike(evt);
+//    };
+//});
