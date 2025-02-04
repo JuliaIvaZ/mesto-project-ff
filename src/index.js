@@ -14,11 +14,11 @@ const popupProfileEdit = document.querySelector('.popup_type_edit');
 const popupNewCardCreation = document.querySelector('.popup_type_new-card');
 const popups = document.querySelectorAll('.popup');
 
-const formElement = document.forms['edit-profile'];
+const profileForm = document.forms['edit-profile'];
 
-const formPlace = document.forms['new-place'];
-const placeInput = formPlace.querySelector('.popup__input_type_card-name');
-const linkInput = formPlace.querySelector('.popup__input_type_url');
+const newPlaceForm = document.forms['new-place'];
+const placeInput = newPlaceForm.querySelector('.popup__input_type_card-name');
+const linkInput = newPlaceForm.querySelector('.popup__input_type_url');
 
 const openPopupImage = document.querySelectorAll('.card__image');
 const popupImage = document.querySelector('.popup_type_image');
@@ -51,12 +51,6 @@ export function handleEscape(evt) {
     }
 };
 
-const callbacks = {
-    deleteCard,
-    addLike,
-    openImage
-};
-
 // Добавление карточки на страницу
 function renderCard(item, method = 'prepend') {
     const cardElement = createCard(item);
@@ -65,22 +59,6 @@ function renderCard(item, method = 'prepend') {
     }
 };
 
-// Вывод карточки на страницу
-initialCards.forEach((item) => {
-    renderCard(item, 'append');
-});
-
-// Редактирование данных профиля
-function handleFormSubmit(evt) {
-    evt.preventDefault();
-    profileTitle.textContent = popupInputName.value;
-    profileDescription.textContent = popupInputDescription.value;
-    evt.target.reset();
-    closeModal(evt.target.closest('.popup'));
-};
-
-formElement.addEventListener('submit', handleFormSubmit);
-
 function addNewCard(evt) {
     evt.preventDefault();
     const newCard = {
@@ -88,11 +66,27 @@ function addNewCard(evt) {
         link: linkInput.value
     }
     renderCard(newCard);
-    closeModal(evt.target.closest('.popup'));
+    closeModal(popupNewCardCreation);      //(evt.target.closest('.popup'));
     evt.target.reset();
 };
 
-formPlace.addEventListener('submit', addNewCard);
+newPlaceForm.addEventListener('submit', addNewCard);
+
+// Вывод карточки на страницу
+initialCards.forEach((item) => {
+    renderCard(item, 'append');
+});
+
+// Редактирование данных профиля
+function handleProfileFormSubmit(evt) {
+    evt.preventDefault();
+    profileTitle.textContent = popupInputName.value;
+    profileDescription.textContent = popupInputDescription.value;
+    evt.target.reset();
+    closeModal(evt.target.closest('.popup'));
+};
+
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 // Добавление лайка
 placesList.addEventListener('click', (evt) => {
