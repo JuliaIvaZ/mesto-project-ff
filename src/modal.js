@@ -16,5 +16,4 @@ function closeModal(modalElement) {
 };
 
 
-
 export { openModal, closeModal };

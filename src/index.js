@@ -1,6 +1,6 @@
 import './pages/index.css';
 import { initialCards } from './initialCards.js';
-import { createCard, deleteCard, addLike } from './cards.js';
+import { createCard } from './cards.js';
 import { openModal, closeModal } from './modal.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
@@ -44,10 +44,13 @@ popups.forEach((popup) => {
         if (evt.target.classList.contains('popup__close')) {
             closeModal(popup);
         }
+        if (evt.key === 'Escape') {
+            const openedPopup = document.querySelector('.popup_is-opened');
+            closeModal(openedPopup);
+        };
     })
 });
 
-// Добавление обработчика событий на клавишу Esc
 export function handleEscape(evt) {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_is-opened');
@@ -55,9 +58,9 @@ export function handleEscape(evt) {
     }
 };
 
-// Добавление карточки на страницу
+// Добавление новой карточки на страницу
 function renderCard(item, method = 'prepend') {
-    const cardElement = createCard(item);
+    const cardElement = createCard(item, openModal, closeModal, openImage, popupImage);    // callbacks);
     if (method === 'prepend' || method === 'append') {
         placesList[ method ](cardElement);
     }
@@ -92,7 +95,6 @@ function handleProfileFormSubmit(evt) {
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
-
 // Функция для заполнения модального окна данными картинки
 function openImage(cardImage, cardTitle) {
     imageContent.src = cardImage.src;
@@ -121,10 +123,8 @@ closeButton.addEventListener('click', () => {
     closeModal(popupImage);
 });
 
-
-// Добавление лайка
-//placesList.addEventListener('click', (evt) => {
-//    if (evt.target.matches('.card__like-button')) {
-//        addLike(evt);
-//    };
-//});
+export const callbacks = {
+    openModal,
+    closeModal,
+    openImage
+};
