@@ -36,6 +36,13 @@ openPopupProfile.addEventListener('click', () => {
 openPopupCard.addEventListener('click', () => {openModal(popupNewCardCreation)});
 
 // Закрываем модальное окно при клике на оверлей (фон) и крестик
+export function handleEscape(evt) {
+    if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_is-opened');
+        closeModal(openedPopup);
+    }
+};
+
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
         if (evt.target.classList.contains('popup_is-opened')) {
@@ -45,18 +52,10 @@ popups.forEach((popup) => {
             closeModal(popup);
         }
         if (evt.key === 'Escape') {
-            const openedPopup = document.querySelector('.popup_is-opened');
-            closeModal(openedPopup);
+            handleEscape(evt);
         };
     })
 });
-
-export function handleEscape(evt) {
-    if (evt.key === 'Escape') {
-        const openedPopup = document.querySelector('.popup_is-opened');
-        closeModal(openedPopup);
-    }
-};
 
 // Добавление новой карточки на страницу
 function renderCard(item, method = 'prepend') {
@@ -122,9 +121,3 @@ openPopupImage.forEach((item) => {
 closeButton.addEventListener('click', () => {
     closeModal(popupImage);
 });
-
-export const callbacks = {
-    openModal,
-    closeModal,
-    openImage
-};

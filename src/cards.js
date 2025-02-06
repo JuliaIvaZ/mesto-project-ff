@@ -27,13 +27,13 @@ function createCard(item, openModal, closeModal, openImage, popupImage) {
   const cardDeleteButton = card.querySelector('.card__delete-button');
 
   cardImage.addEventListener('click', () => {
-    openModal(cardImage);
+    openModal(popupImage);
     openImage(cardImage, cardTitle);
   });
   cardDeleteButton.addEventListener('click', () => deleteCard(card));
   cardLikeButton.addEventListener('click', addLike);
   cardClosePopupButton.addEventListener('click', () => closeModal(popupImage));
-
+  
   return card; 
 };
 
