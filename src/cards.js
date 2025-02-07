@@ -9,7 +9,7 @@ function addLike(evt) {
 }
 
 // Функция создания карточки 
-function createCard(item, openModal, closeModal, openImage, popupImage) {
+function createCard(item, openModal, closeModal, handleImageClick, popupImage) {
 
   const defaultCard = document.querySelector('#card-template').content.querySelector('.card');  // Темплейт карточки
   const card = defaultCard.cloneNode(true); 
@@ -23,16 +23,14 @@ function createCard(item, openModal, closeModal, openImage, popupImage) {
   const cardTitle = cardDescription.querySelector('.card__title');
   cardTitle.textContent = item.name;
 
-  const cardClosePopupButton = popupImage.querySelector('.popup__close');
+  //const cardClosePopupButton = popupImage.querySelector('.popup__close');
   const cardDeleteButton = card.querySelector('.card__delete-button');
 
   cardImage.addEventListener('click', () => {
-    openModal(popupImage);
-    openImage(cardImage, cardTitle);
+    handleImageClick(cardImage, cardTitle);
   });
   cardDeleteButton.addEventListener('click', () => deleteCard(card));
   cardLikeButton.addEventListener('click', addLike);
-  cardClosePopupButton.addEventListener('click', () => closeModal(popupImage));
   
   return card; 
 };

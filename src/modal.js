@@ -1,4 +1,9 @@
-import { handleEscape } from "./index.js";
+function handleEscape(evt) {
+    if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_is-opened');
+        closeModal(openedPopup);
+    }
+};
 
 // Функция открытия модального окна
 function openModal(modalElement) {
@@ -16,4 +21,4 @@ function closeModal(modalElement) {
 };
 
 
-export { openModal, closeModal };
+export { openModal, closeModal, handleEscape };
