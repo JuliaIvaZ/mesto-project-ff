@@ -2,7 +2,7 @@ import './pages/index.css';
 //import { initialCards } from './initialCards.js';
 import { createCard } from './cards.js';
 import { openModal, closeModal} from './modal.js';
-import { getUserInfo, getCards, setUserInfo } from './api.js';
+import { getUserInfo, getCards, setUserInfo, setNewCard } from './api.js';
 import { enableValidation, clearValidation } from './validation.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
@@ -149,6 +149,7 @@ function addNewCard(evt) {
         name: placeInput.value,
         link: linkInput.value
     }
+    setNewCard(newCard.name, newCard.link);
     renderCard(newCard);
     closeModal(popupNewCardCreation);  
     evt.target.reset();
@@ -169,7 +170,7 @@ function handleProfileFormSubmit(evt) {
 
     setUserInfo(popupInputName.value, popupInputDescription.value);
     console.log('Новые данные пользователя:', popupInputName.value, popupInputDescription.value);
-    
+
     evt.target.reset();
     closeModal(popupProfileEdit);
 

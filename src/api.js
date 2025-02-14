@@ -16,7 +16,7 @@ const getUserInfo = () => {
         }
         return res.json() })
     .then(data => {
-        console.log('Данные пользователя_55:  ', data);
+        console.log('Данные пользователя_66:  ', data);
         return data;
     })
     .catch(err => {
@@ -63,4 +63,18 @@ const setUserInfo = (userName, userAbout) => {
 
 };
 
-export { getUserInfo, getCards, setUserInfo };
+const setNewCard = (cardName, cardLink) => {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/cards', {
+        method: 'POST',
+        headers: {
+            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: cardName,
+            link: cardLink
+        })
+    })
+};
+
+export { getUserInfo, getCards, setUserInfo, setNewCard };
