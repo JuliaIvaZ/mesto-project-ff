@@ -9,7 +9,9 @@ const clearValidation = (formElement, settings) => {
 
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, settings); // Очищаем ошибки
-        inputElement.value = '';
+        if (inputElement.id === 'input_card_name') {
+            inputElement.value = '';
+        }
     });
 
 // Обновляем состояние кнопки
@@ -42,11 +44,10 @@ const hideInputError = (formElement, inputElement, settings) => {
 const checkInputValidity = (formElement, inputElement, settings) => {
     let errorMessage = inputElement.validationMessage;
 
-    if (inputElement.id === 'input_card_name' && !cardRegex.test(inputElement.value)) {
-        errorMessage = inputElement.dataset.errorMessage;
-    }
+// TODO:: Добавить проверку на соответствие регулярным выражениям    
+     
     
-      // Проверка на соответствие регулярным выражениям
+    // Проверка на соответствие регулярным выражениям
     //if (inputElement.id === 'input_name' && !nameRegex.test(inputElement.value)) {
     //    errorMessage = inputElement.dataset.errorMessage;
    // }
