@@ -2,7 +2,7 @@ import './pages/index.css';
 import { initialCards } from './initialCards.js';
 import { createCard } from './cards.js';
 import { openModal, closeModal} from './modal.js';
-import { getInitialCards } from './api.js';
+import { getUserInfo, userUpdateProfile } from './api.js';
 import { enableValidation, clearValidation } from './validation.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
@@ -10,6 +10,7 @@ const openPopupProfile = document.querySelector('.profile__edit-button'); // К�
 const openPopupCard = document.querySelector('.profile__add-button'); // Кнопка открытия попапа добавления новой карточки
 const profileDescription = document.querySelector('.profile__description');
 const profileTitle = document.querySelector('.profile__title');
+const profileAvatar = document.querySelector('.profile__image');
 const popupInputName = document.querySelector('.popup__input_type_name');
 const popupInputDescription = document.querySelector('.popup__input_type_description');
 const popupProfileEdit = document.querySelector('.popup_type_edit');
@@ -39,6 +40,14 @@ const validationConfig = {
   };
 
   enableValidation(validationConfig);
+
+  getUserInfo()
+    .then(data => {
+        if (data) {
+            userUpdateProfile(data);
+        }
+    })
+    .catch(err => console.log('Ошибка: ', err));
 
 const resetForm = (formElement, buttonElement) => {
     const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
