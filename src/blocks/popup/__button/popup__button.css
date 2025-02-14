@@ -25,3 +25,9 @@
     line-height: 17px;
   }
 }
+
+.button__inactive {
+  opacity: 0.2; 
+  pointer-events: none; 
+  cursor: not-allowed;
+}
