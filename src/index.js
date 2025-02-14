@@ -2,7 +2,7 @@ import './pages/index.css';
 //import { initialCards } from './initialCards.js';
 import { createCard } from './cards.js';
 import { openModal, closeModal} from './modal.js';
-import { getUserInfo, getCards } from './api.js';
+import { getUserInfo, getCards, setUserInfo } from './api.js';
 import { enableValidation, clearValidation } from './validation.js';
 
 const placesList = document.querySelector('.places__list');  // DOM узлы
@@ -50,14 +50,6 @@ const validationConfig = {
 
 enableValidation(validationConfig);
 
-// Получение данных пользователя с сервера
-//getUserInfo()
-//    .then(data => {
-//        if (data) {
-//            userUpdateProfile(data);
-//        }
-//    })
-//    .catch(err => console.log('Ошибка: ', err));
 
 Promise.all([getUserInfo(), getCards()])
     .then (([userData, cardsData]) => {
@@ -174,8 +166,13 @@ function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = popupInputName.value;
     profileDescription.textContent = popupInputDescription.value;
+
+    setUserInfo(popupInputName.value, popupInputDescription.value);
+    console.log('Новые данные пользователя:', popupInputName.value, popupInputDescription.value);
+    
     evt.target.reset();
     closeModal(popupProfileEdit);
+
 };
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);

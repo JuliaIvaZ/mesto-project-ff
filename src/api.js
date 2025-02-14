@@ -1,3 +1,5 @@
+import { get } from "jquery";
+
 let userName, userAbout, userAvatar, userId, cohort;
 
 const getUserInfo = () => {
@@ -14,7 +16,7 @@ const getUserInfo = () => {
         }
         return res.json() })
     .then(data => {
-        console.log('Данные пользователя_33:  ', data);
+        console.log('Данные пользователя_55:  ', data);
         return data;
     })
     .catch(err => {
@@ -22,14 +24,6 @@ const getUserInfo = () => {
         throw err;
     });
 };
-
-//const userUpdateProfile = (data) => {
-//    profileTitle.textContent = data.name;
-//    profileDescription.textContent = data.about;
-//    profileAvatar.src = data.avatar;
-//    profileId = data._id;
-//    profileCohort = data.cohort;
-//};
 
 const getCards = () => {
     return fetch ('https://nomoreparties.co/v1/wff-cohort-31/cards', {
@@ -54,5 +48,19 @@ const getCards = () => {
     });
 };
 
+const setUserInfo = (userName, userAbout) => {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/users/me', {
+        method: 'PATCH',
+        headers: {
+            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: userName,
+            about: userAbout
+        })
+    });
 
-export { getUserInfo, getCards };
+};
+
+export { getUserInfo, getCards, setUserInfo };
