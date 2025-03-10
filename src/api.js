@@ -1,12 +1,12 @@
-import { get } from "jquery";
+//import { get } from "jquery";
 
-let userName, userAbout, userAvatar, userId, cohort;
+//let userName, userAbout, userAvatar, userId, cohort;
 
 const getUserInfo = () => {
-    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/users/me', {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-33/users/me', {
         method: 'GET',
         headers: {
-            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f',
             'Content-Type': 'application/json'
         }
     })
@@ -16,7 +16,7 @@ const getUserInfo = () => {
         }
         return res.json() })
     .then(data => {
-        console.log('Данные пользователя_66:  ', data);
+        console.log('Данные пользователя_00:  ', data);
         return data;
     })
     .catch(err => {
@@ -26,10 +26,10 @@ const getUserInfo = () => {
 };
 
 const getCards = () => {
-    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/cards', {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-33/cards', {
         method: 'GET',
         headers: {
-            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f',
             'Content-Type': 'application/json'
         }
     })
@@ -49,10 +49,10 @@ const getCards = () => {
 };
 
 const setUserInfo = (userName, userAbout) => {
-    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/users/me', {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-33/users/me', {
         method: 'PATCH',
         headers: {
-            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -64,10 +64,10 @@ const setUserInfo = (userName, userAbout) => {
 };
 
 const setNewCard = (cardName, cardLink) => {
-    return fetch ('https://nomoreparties.co/v1/wff-cohort-31/cards', {
+    return fetch ('https://nomoreparties.co/v1/wff-cohort-33/cards', {
         method: 'POST',
         headers: {
-            authorization: '6c923aa8-3b4d-40ea-8d28-9c9e04b6301a',
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -77,4 +77,36 @@ const setNewCard = (cardName, cardLink) => {
     })
 };
 
-export { getUserInfo, getCards, setUserInfo, setNewCard };
+const setLike = (cardId) => {
+    return fetch (`https://nomoreparties.co/v1/wff-cohort-33/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: {
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f'
+        }
+    })
+    .then ((res) => {
+        if (!res.ok) {
+            throw new Error(`Ошибка постановки лайка_1: ${res.status}`);
+        }
+        return res.json()
+    })
+    .catch (err => console.log(err));
+};
+
+const removeLike = (cardId) => {
+    return fetch (`https://nomoreparties.co/v1/wff-cohort-33/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: '07069f22-afde-49a4-88de-b3e1ba6e8b6f'
+        }
+    })
+    .then ((res) => {
+        if (!res.ok) {
+            throw new Error(`Ошибка снятия лайка_1: ${res.status}`);
+        }
+        return res.json()
+    })
+    .catch (err => console.log(err));
+};
+
+export { getUserInfo, getCards, setUserInfo, setNewCard, setLike, removeLike };
