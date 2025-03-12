@@ -19,7 +19,7 @@
   opacity: 0.6;
 }
 
-.card__like {
+/*.card__like {
   display: grid;
   align-items: center;
   justify-content: space-between;
@@ -29,5 +29,23 @@
   font-size: 13px;
   color: #000;
   margin: 0;
+  text-align: center;
+}*/
+
+
+.like__block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.amount__likes {
+  display: block;
+  margin: 0;
+  padding: 0;
+  align-self: center;
+  color: black;
+  font-size: 13px;
+  line-height: 15.73px;
   text-align: center;
 }
