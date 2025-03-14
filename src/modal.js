@@ -20,12 +20,3 @@ function closeModal(modalElement) {
 };
 
 export { openModal, closeModal }
-
-// Функция срабатывания на ESC
-//const handleEscape = (evt) => {
-//    const popup = document.querySelector(".popup_is-opened"); // находим открытый попап
-//    if (evt.key === "Escape") {
-//      closeModalWindow(popup);
-//    }
-//  };
-
