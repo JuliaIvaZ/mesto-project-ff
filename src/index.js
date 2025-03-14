@@ -1,7 +1,7 @@
 import './pages/index.css';
 
 import { openModal, closeModal } from './modal.js';
-import { createCard, deleteCard, addLike } from './cards.js'; 
+import { createCard, deleteCard, addLike } from './card.js'; 
 import { enableValidation, clearValidation } from './validation.js';
 import { getInitialData, setUserInfo, setNewCard, setAvatar, deleteUserCard, removeLike, setLike} from './api.js';
 
@@ -49,15 +49,7 @@ enableValidation(validationConfig);
 // Функция рендеринга карточек
 const renderCards = (cardsData, userId) => {
     cardsData.forEach(card => {
-        let deleteAbility = false;
-        if (card.owner._id === userId) {
-            deleteAbility = true;
-        }
-        let likesPlaced = false;
-        if (card.likes.some((like) => like._id === userId)) {
-            likesPlaced = true;
-        }
-        let cardElement = createCard (card, showPopupImage, addLike, deleteCard, deleteAbility, userId, likesPlaced);
+        let cardElement = createCard (card, showPopupImage, addLike, deleteCard, userId);
         placesList.prepend(cardElement);
     });
 };
@@ -151,7 +143,7 @@ function addNewCard(evt) {
         newCard._id = card._id;
         newCard.likes = card.likes;
         const userId = card.owner._id;
-        placesList.prepend (createCard (newCard, showPopupImage, addLike, deleteCard, true, userId, false));
+        placesList.prepend (createCard (newCard, showPopupImage, addLike, deleteCard, userId));
 
         saveButton.textContent = 'Сохранить';
         closeModal(popupNewCardCreation);
