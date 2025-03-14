@@ -7,7 +7,8 @@ function handleEscape(evt) {
 
 // Функция открытия модального окна
 function openModal(modalElement) {
-    modalElement.classList.add('popup_is-opened');setTimeout(() => {
+    modalElement.classList.add('popup_is-opened');
+    setTimeout(() => {
         modalElement.classList.add('popup_is-opened');   
     }, 1);
     document.addEventListener('keydown', handleEscape);
