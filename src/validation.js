@@ -1,12 +1,10 @@
 // Функция для проверки валидности поля
 const checkInputValidity = (formElement, inputElement, settings) => {
   let errorMessage = inputElement.validationMessage;
+
   if (inputElement.validity.patternMissmatch && inputElement.dataset.errorMessage) {
     errorMessage = inputElement.dataset.errorMessage;
-  } else if (inputElement.validity.tooShort) {
-    errorMessage = `Минимальное количество символов: ${inputElement.minLength}. 
-    Длина текста сейчас: ${inputElement.value.length} символ${inputElement.value.length === 1 ? '' : 'а'}.`;
-  }
+  } 
 
   if (inputElement.validity.valid) {
     hideInputError(formElement, inputElement, settings);
@@ -81,18 +79,9 @@ const clearValidation = (formElement, settings) => {
 
     inputList.forEach((inputElement) => {
         hideInputError(formElement, inputElement, settings); 
-        if (inputElement.id === 'input_card_name') {
-            inputElement.value = '';
-        }
     });
   // Обновляем состояние кнопки
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(settings.inactiveButtonClass);
-    buttonElement.disabled = true;
-  } else {
-    buttonElement.classList.remove(settings.inactiveButtonClass);
-    buttonElement.disabled = false;
-  }
+  toggleButtonState(buttonElement, inputList, settings);
 };
 
 export { enableValidation, clearValidation };

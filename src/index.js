@@ -90,12 +90,9 @@ formElementAdd.addEventListener('submit', addNewCard);
 // Закрываем модальное окно при клике на оверлей (фон) и крестик
 popups.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_is-opened')) {
+        if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains(closeButton.classList)) {
             closeModal(popup);
         }
-        if (evt.target.classList.contains(closeButton.classList)) {
-            closeModal(popup);
-        };
     });
 });
 
@@ -113,17 +110,18 @@ function showPopupImage(src, alt, capt) {
 // Функция редактирования данных профиля
 function handleProfileFormSubmit(evt) {
     evt.preventDefault(); 
-
     const saveButton = popupProfileEdit.querySelector(`${validationConfig.submitButtonSelector}`);
     saveButton.textContent = 'Сохранение...';
-    setUserInfo(popupInputName.value, popupInputDescription.value)
-    .then(() => {
-        profileTitle.textContent = popupInputName.value;
-        profileDescription.textContent = popupInputDescription.value;
 
-        saveButton.textContent='Сохранить';
+    setUserInfo(popupInputName.value, popupInputDescription.value)
+    .then((userData) => {
+        profileTitle.textContent = userData.name;
+        profileDescription.textContent = userData.about;
+
         closeModal(popupProfileEdit);
-    });
+    })
+    .catch((err) => console.error('Ошибка при обновлении профиля: ', err))
+    .finally(() => saveButton.textContent='Сохранить')
 };
 
 // Функция добавление новой карточки.
@@ -132,24 +130,20 @@ function addNewCard(evt) {
     const newCard = {
         name: placeInput.value,
         link: linkInput.value,
-        _id: '0',
-        likes: []
     };
     const saveButton = popupNewCardCreation.querySelector(`${validationConfig.submitButtonSelector}`);
     saveButton.textContent = 'Cохранение...';
 
     setNewCard(newCard)
     .then((card) => {
-        newCard._id = card._id;
-        newCard.likes = card.likes;
         const userId = card.owner._id;
-        placesList.prepend (createCard (newCard, showPopupImage, addLike, deleteCard, userId));
+        placesList.prepend (createCard (card, showPopupImage, addLike, deleteCard, userId));
 
-        saveButton.textContent = 'Сохранить';
         closeModal(popupNewCardCreation);
         formElementAdd.reset();
     })
-    .catch(err => console.log('Ошибка загрузки карточки: ', err));
+    .catch(err => console.log('Ошибка загрузки карточки: ', err))
+    .finally(() => saveButton.textContent='Сохранить')
 };
 
 // Редактирование аватара
@@ -182,9 +176,8 @@ function makeNewAvatar(evt) {
     .then ((userData) => {
         profileAvatar.setAttribute('style', `background-image: url(${userData.avatar})`);
 
-        saveButton.textContent='Сохранить';
         closeModal(popupNewAvatar);
-        
         formElementAvatar.reset();
-    });
+    })
+    .finally(() => saveButton.textContent='Сохранить')
 };
