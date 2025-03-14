@@ -3,7 +3,7 @@ import './pages/index.css';
 import { openModal, closeModal } from './modal.js';
 import { createCard, deleteCard, addLike } from './cards.js'; 
 import { enableValidation, clearValidation } from './validation.js';
-import { getInitialCards, setUserInfo, setNewCard, setAvatar, deleteUserCard, removeLike, setLike} from './api.js';
+import { getInitialData, setUserInfo, setNewCard, setAvatar, deleteUserCard, removeLike, setLike} from './api.js';
 
 const page = document.querySelector('.page');
 const placesList = document.querySelector('.places__list');  // DOM узлы
@@ -62,16 +62,7 @@ const renderCards = (cardsData, userId) => {
     });
 };
 
-getInitialCards()
-.then((responses) => {
-    return Promise.all(responses.map(response => {
-        if (response.ok) {
-            return response.json(); 
-        } else {
-            return Promise.reject(`Ошибка: ${response.status}`);
-        }
-    }));
-})
+getInitialData()
 .then(([cardsData, userData]) => {
     const cards = cardsData;
     const user = userData;
